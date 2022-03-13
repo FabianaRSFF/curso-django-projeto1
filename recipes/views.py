@@ -6,3 +6,8 @@ def home(request):
         'name': 'Fabiana',
     })
 
+
+def recipe(request, id):
+    return render(request, 'recipes/pages/recipe-view.html', context={
+        'name': 'Fabiana',
+    })
