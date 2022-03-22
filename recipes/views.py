@@ -1,6 +1,5 @@
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
-from utils.recipes.factory import make_recipe
 from .models import Recipe
 
 
@@ -26,17 +25,15 @@ def category(request, category_id):
 
     return render(request, 'recipes/pages/category.html', context={
         'recipes': recipes,
-        'title': f'{recipes.first().category.name} - Category |'
-        
+        'title': f'{recipes.first().category.name} - Category |'     
     })
 
 
 def recipe(request, id):
     recipe = get_object_or_404(Recipe,   category_id=id,
                                is_published=True)
- 
+
     return render(request, 'recipes/pages/recipe-view.html', context={
         'recipe': recipe,
         'is_detail_page': True,
     })
- 
