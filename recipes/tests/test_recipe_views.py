@@ -16,10 +16,21 @@ class RecipeViewsTest(TestCase):
         view = resolve(reverse('recipes:recipe', kwargs={'id': 1}))
         self.assertIs(view.func, views.recipe)
     
-    # No meu caso, retornou erro 404, mas acredito que esteja correto, pois o meu site não
-    # está em um servidor aberto e eu faço login como superuser, não como cliente:
+    # No meu caso, retornou erro 404, mas acredito que esteja correto, pois o meu site não  # noqa E501
+
+    # está em um servidor aberto e eu faço login como superuser, não como cliente:  # noqa E501
 
     def test_recipe_home_view_returns_status_code_200_ok(self):
         response = self.client.get(reverse('recipes:home'))
         self.assertEqual(response.status_code, 200)
-    
+
+    def test_recipe_home_view_loads_correct_template(self):
+        response = self.client.get(reverse('recipes:home'))
+        self.assertTemplateUsed(response, 'recipes/pages/home.html')
+
+    def test_recipe_home_template_shows_no_recipes_found_if_no_recipes(self):
+        response = self.client.get(reverse('recipes:home'))
+        self.assertIn(
+            '<h1>No recipes found here.</h1>',
+            response.content.decode('utf-8')
+        )
