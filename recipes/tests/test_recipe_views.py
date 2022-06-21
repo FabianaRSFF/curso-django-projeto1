@@ -1,5 +1,3 @@
-from unicodedata import category, name
-from venv import create
 from django.test import TestCase
 from django.urls import reverse, resolve
 from recipes import views
