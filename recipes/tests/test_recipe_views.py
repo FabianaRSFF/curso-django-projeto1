@@ -31,6 +31,21 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('Recipe Title', content)
         self.assertEqual(len(response.context['recipes']), 1)
 
+        #TODO
+        """
+        This test 'test_recipe_home_template_dont_load_recipes_not_published(self):'
+        is not working
+        """
+    def test_recipe_home_template_dont_load_recipes_not_published(self):
+        self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse('recipes:home'))
+
+        self.assertIn(
+            '<h1>No recipes found here.</h1>',
+            response.content.decode('utf-8')
+        )
+
     def test_recipe_category_view_function_is_correct(self):
         view = resolve(reverse('recipes:category', kwargs={'category_id': 1}))
         self.assertIs(view.func, views.category)
@@ -51,6 +66,14 @@ class RecipeViewsTest(RecipeTestBase):
                                            kwargs={'id': 1}))
         content = response.content.decode('utf-8')
         self.assertIn(needed_title, content)
+
+    def test_recipe_detail_template_dont_load_recipes_not_published(self):
+        recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse('recipes:recipe',
+                                           kwargs={'id': recipe.category.id}))
+
+        self.assertEqual(response.status_code, 404)
     
     def test_recipe_category_view_returns_404_if_no_recipes_found(self):
         response = self.client.get('recipes:category', kwargs={'category_id': 1000}) # noqa E501
@@ -63,6 +86,13 @@ class RecipeViewsTest(RecipeTestBase):
         response = self.client.get(reverse('recipes:category', args=(1,)))
         content = response.content.decode('utf-8')
         self.assertIn(needed_title, content)
+    
+    def test_recipe_category_template_dont_load_recipes_not_published(self):
+        recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get('recipes:category', kwargs={'id': recipe.category.id}) # noqa E501
+
+        self.assertEqual(response.status_code, 404)
     
     def test_no_recipe_home_template_shows_no_recipes_found_if_no_recipes(self):   # noqa E501
         response = self.client.get(reverse('recipes:home'))   # noqa E501
