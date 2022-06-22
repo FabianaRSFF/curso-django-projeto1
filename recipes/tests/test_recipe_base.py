@@ -4,9 +4,8 @@ from recipes.models import Category, Recipe, User
 
 class RecipeTestBase(TestCase):
     def setUp(self) -> None:
-        self.make_recipe()
         return super().setUp()
-
+    
     def make_category(self, name='Category'):
         return Category.objects.create(name=name)
 
@@ -25,7 +24,7 @@ class RecipeTestBase(TestCase):
             password=password,
             email=email,
         )
-    
+        
     def make_recipe(
         self,
         category_data=None,
@@ -61,3 +60,5 @@ class RecipeTestBase(TestCase):
             preparation_steps_is_html=preparation_steps_is_html,
             is_published=is_published,
         )
+        
+    
