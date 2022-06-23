@@ -1,0 +1,5 @@
+# TODO
+# Something is wrong:
+[run]
+branch = True
+omit = venv/*, **/*test*.py, manage.py, __localcode/*, project/*
