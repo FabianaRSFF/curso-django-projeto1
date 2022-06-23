@@ -31,7 +31,7 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('Recipe Title', content)
         self.assertEqual(len(response.context['recipes']), 1)
 
-        #TODO
+        # TODO
         """
         This test 'test_recipe_home_template_dont_load_recipes_not_published(self):'
         is not working
@@ -96,4 +96,3 @@ class RecipeViewsTest(RecipeTestBase):
     
     def test_no_recipe_home_template_shows_no_recipes_found_if_no_recipes(self):   # noqa E501
         response = self.client.get(reverse('recipes:home'))   # noqa E501
-
