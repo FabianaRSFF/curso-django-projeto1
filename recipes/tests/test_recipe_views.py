@@ -40,10 +40,10 @@ class RecipeViewsTest(RecipeTestBase):
         self.make_recipe(is_published=False)
 
         response = self.client.get(reverse('recipes:home'))
+        content = response.content.decode('utf-8')
 
         self.assertIn(
-            '<h1>No recipes found here.</h1>',
-            response.content.decode('utf-8')
+            '<h1>No recipes found here.</h1>', content
         )
 
     def test_recipe_category_view_function_is_correct(self):
@@ -96,3 +96,7 @@ class RecipeViewsTest(RecipeTestBase):
     
     def test_no_recipe_home_template_shows_no_recipes_found_if_no_recipes(self):   # noqa E501
         response = self.client.get(reverse('recipes:home'))   # noqa E501
+        self.assertIn(
+            '<h1>No recipes found here.</h1>',
+            response.content.decode('utf-8')
+        )
