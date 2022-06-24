@@ -31,21 +31,16 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('Recipe Title', content)
         self.assertEqual(len(response.context['recipes']), 1)
 
-        # TODO
-        """
-        This test 'test_recipe_home_template_dont_load_recipes_not_published(self):'
-        is not working
-        """
     def test_recipe_home_template_dont_load_recipes_not_published(self):
         self.make_recipe(is_published=False)
 
         response = self.client.get(reverse('recipes:home'))
         content = response.content.decode('utf-8')
 
-        self.assertIn(
+        self.assertTrue(
             '<h1>No recipes found here.</h1>', content
         )
-
+    
     def test_recipe_category_view_function_is_correct(self):
         view = resolve(reverse('recipes:category', kwargs={'category_id': 1}))
         self.assertIs(view.func, views.category)
@@ -93,10 +88,20 @@ class RecipeViewsTest(RecipeTestBase):
         response = self.client.get('recipes:category', kwargs={'id': recipe.category.id}) # noqa E501
 
         self.assertEqual(response.status_code, 404)
-    
-    def test_no_recipe_home_template_shows_no_recipes_found_if_no_recipes(self):   # noqa E501
+ 
+    def test_no_recipe_home_template_shows_no_recipes_found_if_no_recipes(self): 
+        self.make_recipe()
+          # noqa E501
         response = self.client.get(reverse('recipes:home'))   # noqa E501
-        self.assertIn(
+        self.assertTrue(
             '<h1>No recipes found here.</h1>',
             response.content.decode('utf-8')
         )
+    
+    def test_recipe_search_uses_correct_view_function(self):
+        resolved = resolve(reverse('recipes:search'))
+        self.assertIs(resolved.func, views.search)
+
+    def test_recipe_search_loads_correct_template(self):
+        response = self.client.get(reverse('recipes:search'))
+        self.assertTemplateUsed(response, 'recipes/pages/search.html')
