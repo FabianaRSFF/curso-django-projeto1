@@ -1,4 +1,3 @@
-from tkinter.messagebox import NO
 from django.shortcuts import redirect, render
 from .forms import RegisterForm
 from django.http import Http404
