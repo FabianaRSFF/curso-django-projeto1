@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import widgets
+from django.core.exceptions import ValidationError
 
 
 def add_attr(field, attr_name, attr_new_val):
@@ -19,6 +19,7 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['email'], 'Your e-mail.')
         add_placeholder(self.fields['first_name'], 'Ex.: James')
         add_placeholder(self.fields['last_name'], 'Ex.: Bond')
+        add_attr(self.fields['username'], 'css', 'a-css-class')
 
     password = forms.CharField(
         required=True,
@@ -78,3 +79,15 @@ class RegisterForm(forms.ModelForm):
                 'placeholder': 'Type your password here.'
             })
         }
+
+    def clean_password(self):
+        data = self.cleaned_data.get('password')
+
+        if 'atenção' in data:
+            raise ValidationError(
+                "Não digite %(value)s no campo password.",
+                code='invalid',
+                params={'value': 'atenção'}
+            )
+
+        return data
