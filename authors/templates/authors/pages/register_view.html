@@ -14,6 +14,7 @@
             <div class="form group">
             <label for="{{field.id_for_label}}">{{field.label}}</label>
                 {{field}}
+                
                 {% if field.help_text %}
                 <p class="help_text">{{field.help_text}}</p>
                 {% endif %}
@@ -22,12 +23,13 @@
             </div>
         {% endfor %}
         </div>
+
         {% if form.errors %}
         <div class="form-content form-content-grid">
             <div class="form-group">
-            <div class="message message-errors">
-                Please, fix the errors in the form.
-            </div>
+                <div class="message message-errors">
+                    Please, fix the errors in the form.
+                </div>
             </div>
         </div>
         {% endif %}
