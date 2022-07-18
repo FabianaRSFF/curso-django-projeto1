@@ -33,13 +33,12 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['email'], 'Your e-mail.')
         add_placeholder(self.fields['first_name'], 'Ex.: James')
         add_placeholder(self.fields['last_name'], 'Ex.: Bond')
-        add_attr(self.fields['username'], 'css', 'a-css-class')
-
+        add_placeholder(self.fields['password'], 'Type your password here')
+        add_placeholder(self.fields['password2'], 'Repeat your password')
+        
     password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Type your password.'
-        }),
+        widget=forms.PasswordInput(),
         error_messages={
                 'required': 'This field must not be empty.'
         },
@@ -52,9 +51,7 @@ class RegisterForm(forms.ModelForm):
     )
     password2 = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Repeat your password.'
-        }),
+        widget=forms.PasswordInput(),
         error_messages={
                 'required': 'This field must not be empty.'
             }
@@ -84,16 +81,7 @@ class RegisterForm(forms.ModelForm):
                 'required': 'This field must not be empty.'
             }
         }
-        widgets = {
-            'first_name': forms.TextInput(attrs={
-                'placeholder': 'Type your username here',
-                'class': 'input text-input'
-            }),
-            'password': forms.PasswordInput(attrs={
-                'placeholder': 'Type your password here.'
-            })
-        }
-
+ 
     def clean_password(self):
         data = self.cleaned_data.get('password')
 
