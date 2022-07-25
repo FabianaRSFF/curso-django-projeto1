@@ -1,5 +1,3 @@
-import imp
-from urllib import response
 from authors.forms import RegisterForm
 from parameterized import parameterized
 from unittest import TestCase
@@ -61,9 +59,15 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
 
     @parameterized.expand([
         ('username', 'This field must not be empty.'),
+        ('first_name', 'Write your first name.'),
+        ('last_name', 'Write your last name.'),
+        ('password', 'This field must not be empty.'),
+        ('password2', 'This field must not be empty.'),
+        ('email', 'The e-mail must be valid.'),
     ])
     def test_fields_cannot_be_empty(self, field, msg):
         self.form_data[field] = ''
         url = reverse('authors:create')
         response = self.client.post(url, data=self.form_data, follow=True)
         self.assertIn(msg, response.content.decode('utf-8'))
+        self.assertIn(msg, response.context['form'].errors.get(field))
