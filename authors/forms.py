@@ -43,21 +43,24 @@ class RegisterForm(forms.ModelForm):
                 'required': 'This field must not be empty.'
         },
 
-        validators=[strong_password]
+        validators=[strong_password],
+        label='Password'
     )
     password2 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(),
         error_messages={
                 'required': 'This field must not be empty.'
-            }
+            },
+        label='Password2'
     )
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(),
         help_text=(
-             'The e-mail must be valid.'
-        )
+            'The e-mail must be valid.'
+        ),
+        label='E-mail'
     )
 
     class Meta:
@@ -73,8 +76,6 @@ class RegisterForm(forms.ModelForm):
             'username': 'Username',
             'first_name': 'First Name',
             'last_name': 'Last Name',
-            'email': 'E-mail',
-            'password': 'Password',
         }
         help_text = {
             'email': 'The e-mail must be valid.'
@@ -84,18 +85,6 @@ class RegisterForm(forms.ModelForm):
                 'required': 'This field must not be empty.'
             }
         }
-
-    def clean_password(self):
-        data = self.cleaned_data.get('password')
-
-        if 'atenção' in data:
-            raise ValidationError(
-                "Não digite %(value)s no campo password.",
-                code='invalid',
-                params={'value': 'atenção'}
-            )
-
-        return data
 
     def clean(self):
         cleaned_data = super().clean()

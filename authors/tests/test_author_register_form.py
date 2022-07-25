@@ -21,14 +21,23 @@ class AuthorRegisterFormUnitTest(TestCase):
         ('username', (
                     'Obrigatório. 150 caracteres ou menos.'
                     ' Letras, números e @/./+/-/_ apenas.')),
-        ('email', ''),
-        ('password', (
-            'Password must have at least one uppercase letter,'
-            ' one lowercase letter and one number. At least '
-            '8 characters.'
-        )),
+        ('email', 'The e-mail must be valid.'),
+        
     ])
     def test_fields_help_text(self, field, needed):
         form = RegisterForm()
         current = form[field].field.help_text
+        self.assertEqual(current, needed)
+
+    @parameterized.expand([
+        ('username', 'Username'),
+        ('first_name', 'First Name'),
+        ('last_name', 'Last Name'),
+        ('email', 'E-mail'),
+        ('password', 'Password'),
+        ('password2', 'Password2'),
+    ])
+    def test_fields_label(self, field, needed):
+        form = RegisterForm()
+        current = form[field].field.label
         self.assertEqual(current, needed)
