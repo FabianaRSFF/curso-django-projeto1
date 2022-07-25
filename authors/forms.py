@@ -38,16 +38,13 @@ class RegisterForm(forms.ModelForm):
  
     first_name = forms.CharField(
         error_messages={'required': 'Write your first name.'},
-        required=True,
         label='First Name',
     )
     last_name = forms.CharField(
         error_messages={'required': 'Write your last name.'},
-        required=True,
         label='Last Name',
     )
     password = forms.CharField(
-        required=True,
         widget=forms.PasswordInput(),
         error_messages={
                 'required': 'This field must not be empty.'
@@ -57,7 +54,6 @@ class RegisterForm(forms.ModelForm):
         label='Password'
     )
     password2 = forms.CharField(
-        required=True,
         widget=forms.PasswordInput(),
         error_messages={
                 'required': 'This field must not be empty.'
@@ -65,7 +61,6 @@ class RegisterForm(forms.ModelForm):
         label='Password2'
     )
     email = forms.EmailField(
-        required=True,
         widget=forms.EmailInput(),
         help_text='The e-mail must be valid.',
         label='E-mail',
