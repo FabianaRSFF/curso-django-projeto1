@@ -21,8 +21,8 @@ class AuthorRegisterFormUnitTest(TestCase):
     
     @parameterized.expand([
         ('username', (
-                    'Obrigatório. 150 caracteres ou menos.'
-                    ' Letras, números e @/./+/-/_ apenas.')),
+                    'Username must have letters, numbers or @/./+/-/_ '
+                    'and at least, 150 caracters.')),
         ('email', 'The e-mail must be valid.'),
         
     ])
@@ -58,7 +58,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         return super().setUp(*args, **kwargs)
 
     @parameterized.expand([
-        ('username', 'This field must not be empty.'),
+        ('username', 'This field is required.'),
         ('first_name', 'Write your first name.'),
         ('last_name', 'Write your last name.'),
         ('password', 'This field must not be empty.'),
@@ -69,5 +69,26 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.form_data[field] = ''
         url = reverse('authors:create')
         response = self.client.post(url, data=self.form_data, follow=True)
+
         self.assertIn(msg, response.content.decode('utf-8'))
         self.assertIn(msg, response.context['form'].errors.get(field))
+    
+    def test_username_must_have_min_length_4_chars(self):
+        self.form_data['username'] = 'joa'
+        url = reverse('authors:create')
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        msg = 'Ensure this value has at least 4 characters.'
+        self.assertIn(msg, response.content.decode('utf-8'))
+        self.assertIn(msg, response.context['form'].errors.get('username'))
+
+    def test_username_must_have_max_length_150_chars(self):
+        self.form_data['username'] = 'joa' * 100
+        url = reverse('authors:create')
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        msg = 'Ensure this value has at most 150 characters.'
+        self.assertIn(msg, response.content.decode('utf-8'))
+        self.assertIn(msg, response.context['form'].errors.get('username'))
+
+    
