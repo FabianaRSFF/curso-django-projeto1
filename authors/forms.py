@@ -38,9 +38,9 @@ class RegisterForm(forms.ModelForm):
  
     username = forms.CharField(
         label='Username',
-        help_text=('Username must have letters, numbers or @/./+/-/_ and at least, 150 characters.'), # noqa E501
+        help_text='Username must have letters, numbers or @/./+/-/_ and at least, 150 caracters.', # noqa E501
         error_messages={
-                'required': 'This field must not be empty.',
+                'required': 'This field is required.',
                 'min_length': 'Ensure this value has at least 4 characters.',
                 'max_length': 'Ensure this value has at most 150 characters.'
         },

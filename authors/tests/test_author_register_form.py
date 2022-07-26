@@ -20,11 +20,8 @@ class AuthorRegisterFormUnitTest(TestCase):
         self.assertEqual(current_placeholder, placeholder)
     
     @parameterized.expand([
-        ('username', (
-                    'Username must have letters, numbers or @/./+/-/_ '
-                    'and at least, 150 caracters.')),
-        ('email', 'The e-mail must be valid.'),
-        
+        ('username', 'Username must have letters, numbers or @/./+/-/_ and at least, 150 caracters.'), # noqa E501
+        ('email', 'The e-mail must be valid.'),    
     ])
     def test_fields_help_text(self, field, needed):
         form = RegisterForm()
@@ -129,3 +126,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
 
         self.assertNotIn(msg, response.content.decode('utf-8'))
         
+    def test_send_get_request_returns_to_registration_create_view_returns_404(self):
+        url = reverse('authors:create')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
