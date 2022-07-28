@@ -1,4 +1,3 @@
-from cgitb import text
 from random import randint
 from string import digits
 
@@ -20,7 +19,7 @@ def make_recipe():
         'preparation_time': fake.random_number(digits=2, fix_len=True),
         'preparation_time_unit': 'Minutos',
         'servings': fake.random_number(digits=2, fix_len=True),
-        'serving_unit':'Porção',
+        'serving_unit': 'Porção',
         'preparation_steps': fake.text(3000),
         'created_at': fake.date_time(),
         'author': {
