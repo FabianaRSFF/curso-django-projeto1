@@ -78,7 +78,7 @@
   }
   
   .container {
-    max-width: 144rem;
+    max-width: 164rem;
     margin: 0 auto;
     padding: var(--spacing-gutter-medium);
   }
@@ -105,12 +105,13 @@
   
   .search-form {
     border: 0.2rem solid var(--color-primary-dark);
-    max-width: 64rem;
+    max-width: 164rem;
     margin: 0 auto;
     border-radius: 0.4rem;
     position: relative;
     transition: all 300ms ease-in-out;
   }
+
   
   .search-input,
   .search-button {
@@ -119,6 +120,7 @@
     outline: none;
     padding: 1rem;
     transition: all 300ms ease-in-out;
+    width: 100%;
   }
   
   .search-input {
