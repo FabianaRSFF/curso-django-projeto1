@@ -82,6 +82,10 @@
     margin: 0 auto;
     padding: var(--spacing-gutter-medium);
   }
+  .main-form {
+    background: #bdd8e7;
+  }
+  
   
   .main-header-container {
     background: var(--color-primary-dark);
