@@ -138,6 +138,7 @@ def dashboard_recipe_edit(request, id):
         }
     )
 
+
 @login_required(login_url='authors:login', redirect_field_name='next')
 def dashboard_recipe_new(request, id):
     form = AuthorRecipeForm(
