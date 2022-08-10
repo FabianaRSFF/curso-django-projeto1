@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from .forms import RegisterForm, LoginForm
-from django.http import Http404
+from django.http import Http404  
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -134,13 +134,13 @@ def dashboard_recipe_edit(request, id):
         request,
         'authors/pages/dashboard_recipe.html',
         context={
-            'form': form
+            'form': form,
         }
     )
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard_recipe_new(request, id):
+def dashboard_recipe_new(request):
     form = AuthorRecipeForm(
         data=request.POST or None,
         files=request.FILES or None,
@@ -166,3 +166,20 @@ def dashboard_recipe_new(request, id):
             'form_action': reverse('authors:dashboard_recipe_new')
         }
     )
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard_recipe_delete(request, id):
+    recipe = Recipe.objects.filter(
+        is_published=False,
+        author=request.user,
+        pk=id,
+    ).first()
+
+    if not recipe:
+        raise Http404()
+
+    recipe.delete()
+    messages.success('Deleted')
+    return redirect(reverse('authors:dashboard'))
+

@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\authors",
+    "\\authors\\templates",
+    "\\authors\\templates\\authors",
+    "\\authors\\templates\\authors\\pages",
+    "\\base_templates",
+    "\\base_templates\\global",
+    "\\base_templates\\global\\partials"
+  ],
+  "SelectedNode": "\\authors\\views.py",
+  "PreviewInSolutionExplorer": false
+}
