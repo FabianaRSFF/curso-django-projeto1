@@ -147,16 +147,18 @@ def dashboard_recipe_new(request):
     )
 
     if form.is_valid():
-        recipe = form.save(commit=False)
+        recipe: Recipe = form.save(commit=False)
 
         recipe.author = request.user
         recipe.preparation_steps_is_html = False
         recipe.is_published = False
 
         recipe.save()
-        
-        messages.success(request, 'Salvo com sucesso.')
-        return redirect(reverse('authors:dashboard_recipe_edit', args=(id,)))
+
+        messages.success(request, 'Salvo com sucesso!')
+        return redirect(
+            reverse('authors:dashboard_recipe_edit', args=(recipe.id,))
+        )
 
     return render(
         request,
@@ -180,6 +182,6 @@ def dashboard_recipe_delete(request, id):
         raise Http404()
 
     recipe.delete()
-    messages.success('Deleted')
+    messages.success(request, 'Deleted')
     return redirect(reverse('authors:dashboard'))
 
