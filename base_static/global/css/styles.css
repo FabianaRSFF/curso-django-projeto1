@@ -109,7 +109,7 @@
   
   .search-form {
     border: 0.2rem solid var(--color-primary-dark);
-    max-width: 164rem;
+    max-width: 64rem;
     margin: 0 auto;
     border-radius: 0.4rem;
     position: relative;
@@ -132,6 +132,10 @@
     padding-right: 3rem;
   }
   
+  .fa-search {
+    align-items: flex-end;
+  }
+
   .search-button {
     position: absolute;
     top: 0;
