@@ -1,9 +1,9 @@
+import os
 from pathlib import Path
 from time import sleep
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-import os
-
 
 ROOT_PATH = Path(__file__).parent.parent
 CHROMEDRIVER_NAME = 'chromedriver'
