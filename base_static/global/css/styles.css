@@ -86,7 +86,6 @@
     background: #bdd8e7;
   }
   
-  
   .main-header-container {
     background: var(--color-primary-dark);
   }
@@ -137,7 +136,7 @@
   }
 
   .search-button {
-    position: relative;
+    position: absolute;
     top: 0;
     right: 0;
   }
