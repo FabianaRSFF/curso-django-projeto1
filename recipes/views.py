@@ -138,7 +138,7 @@ class RecipeDetailAPI(RecipeDetail):
 
         if recipe_dict.get('cover'):
             recipe_dict['cover'] = self.request.build_absolute_uri() + \
-                recipe_dict['cover'].url[1:]
+                    recipe_dict['cover'].url[1:]
         else:
             recipe_dict['cover'] = ''
 
