@@ -1,21 +1,27 @@
 import os
+
 from django.db.models import Q
-from django.http import Http404
-from django.views.generic import ListView, DetailView
-from utils.pagination import make_pagination
-from django.http import JsonResponse
 from django.forms.models import model_to_dict
+from django.http import Http404, JsonResponse
 from django.shortcuts import render
+from django.views.generic import DetailView, ListView
 
 from recipes.models import Recipe
+from utils.pagination import make_pagination
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
 
 def theory(request, *args, **kwargs):
+    recipes = Recipe.objects.all()
+    recipes = recipes.filter(title__icontains='Teste')
+    context = {
+        'recipes': recipes
+    }
     return render(
         request,
-        "recipes/pages/theory.html"
+        "recipes/pages/theory.html",
+        context=context
     )
 
 
@@ -58,7 +64,7 @@ class RecipeListViewHomeAPI(RecipeListViewBase):
         recipes_list = recipes.object_list.values()
 
         return JsonResponse(
-            list(recipes_list), 
+            list(recipes_list),
             safe=False
         )
 
@@ -147,7 +153,7 @@ class RecipeDetailAPI(RecipeDetail):
 
         if recipe_dict.get('cover'):
             recipe_dict['cover'] = self.request.build_absolute_uri() + \
-                    recipe_dict['cover'].url[1:]
+                recipe_dict['cover'].url[1:]
         else:
             recipe_dict['cover'] = ''
 
