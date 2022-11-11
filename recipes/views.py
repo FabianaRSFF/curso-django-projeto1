@@ -5,10 +5,18 @@ from django.views.generic import ListView, DetailView
 from utils.pagination import make_pagination
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+from django.shortcuts import render
 
 from recipes.models import Recipe
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 6))
+
+
+def theory(request, *args, **kwargs):
+    return render(
+        request,
+        "recipes/pages/theory.html"
+    )
 
 
 class RecipeListViewBase(ListView):
