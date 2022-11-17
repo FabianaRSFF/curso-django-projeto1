@@ -1,6 +1,7 @@
 import os
 
-from django.db.models import Q
+from django.db.models import Q, Value, F
+from django.db.models.functions import Concat
 from django.forms.models import model_to_dict
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
@@ -13,7 +14,14 @@ PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
 
 def theory(request, *args, **kwargs):
-    recipes = Recipe.objects.values('id', 'title')[:5]
+    recipes = Recipe.objects.all().annotate(
+        author_full_name=Concat(
+            F('author__first_name'), Value(' '),
+            F('author__last_name'), Value(' ('),
+            F('author__username'), Value(')'),
+        )
+    )[:5]
+
     number_of_recipes = recipes.aggregate(Count('id'))
 
     context = {
