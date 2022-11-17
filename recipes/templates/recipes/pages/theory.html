@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Theory</h1>
+    <p>Total recipes: {{number_of_recipes}}</p>
     <ul>
         {% for recipe in recipes %}
         <li>{{recipe.id}}{{recipe.is_published}}</li>

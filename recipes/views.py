@@ -5,7 +5,7 @@ from django.forms.models import model_to_dict
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
-
+from django.db.models.aggregates import Count
 from recipes.models import Recipe
 from utils.pagination import make_pagination
 
@@ -13,10 +13,12 @@ PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
 
 def theory(request, *args, **kwargs):
-    recipes = Recipe.objects.defer('is_published')
+    recipes = Recipe.objects.values('id', 'title')[:5]
+    number_of_recipes = recipes.aggregate(Count('id'))
 
     context = {
-        'recipes': recipes
+        'recipes': recipes,
+        'number_of_recipes': number_of_recipes['id__count']
     }
     return render(
         request,
