@@ -11,8 +11,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-    
-    
+
+
 class RecipeManager(models.Model):
     def get_published(self):
         return self.filter(
@@ -51,7 +51,7 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipes:recipe', args=(self.id, ))
-    
+
     def save(self, *args, **kwargs):
         if not self.slug:
             slug = f'{slugify(self.title)}'
