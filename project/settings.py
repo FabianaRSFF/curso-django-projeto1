@@ -34,7 +34,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'INSECURE')
 
 DEBUG = True if os.environ.get('DEBUG') == '1' else False
 
-ALLOWED_HOSTS: list[str] = []
+
+# TODO  Change this with CSRF_TRUSTED_ORIGINS before deploy:
+ALLOWED_HOSTS: list[str] = ['*']
 
 
 # Application definition
