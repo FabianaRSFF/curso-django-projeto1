@@ -534,21 +534,24 @@
     cursor: pointer;
   }
   
+  
+  .hidden-text{
+    display: none;
+  }
+
   .menu-nav {
     display: flex;
     flex-flow: column wrap;
     font-family: var(--font-headings);
     font-size: 2rem;
   }
-  
-  .menu-nav a {
+
+  .menu-nav a{
     width: 100%;
     padding: 1rem;
   }
-  
-  .hidden-text{
-    display: none;
-  }
+
+
 
   @media (max-width: 600px) {
     .main-content-list,
