@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from django.contrib.messages import constants
 
+
 if os.environ.get('DEBUG', None) is None:
     from dotenv import load_dotenv
     load_dotenv()
