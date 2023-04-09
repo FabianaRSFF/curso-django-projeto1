@@ -21,7 +21,7 @@ class Category(models.Model):
         return self.name
 
 
-class RecipeManager(models.Model):
+class RecipeManager(models.Manager):
     def get_published(self):
         return self.filter(
             is_published=True
