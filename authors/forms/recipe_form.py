@@ -63,7 +63,6 @@ class AuthorRecipeForm(forms.ModelForm):
         field_value = self.cleaned_data.get(field_name)
 
         # if not is_positive_number(field_value):
-            # self._my_errors[field_name].append('Must be positive.')
+        # self._my_errors[field_name].append('Must be positive.')
 
         return field_value
-
