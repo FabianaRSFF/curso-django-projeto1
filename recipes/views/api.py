@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from ..models import Recipe
-from ..serializers import RecipeSerializer
+
 from tag.models import Tag
-from ..serializers import TagSerializer
+
+from ..models import Recipe
+from ..serializers import RecipeSerializer, TagSerializer
 
 
 @api_view()
@@ -14,7 +15,7 @@ def recipe_api_list(request):
         instance=recipes,
         many=True,
         context={'request': request},
-        )
+    )
     return Response(serializer.data)
 
 
@@ -28,7 +29,7 @@ def recipe_api_detail(request, pk):
         instance=recipe,
         many=False,
         context={'request': request},
-        )
+    )
     return Response(serializer.data)
 
 
@@ -42,7 +43,5 @@ def tag_api_detail(request, pk):
         instance=tag,
         many=False,
         context={'request': request},
-        )
+    )
     return Response(serializer.data)
-    
-  
