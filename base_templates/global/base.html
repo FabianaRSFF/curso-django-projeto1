@@ -5,11 +5,12 @@
 
 <head>
     {% include "global/partials/head.html" %}
-    <title> {% block title %}{% endblock title %} Recipes</title>
+    <title> {% block title %}{% endblock title %} Soul Recipes </title>
 
 </head>
 
 <body>
+    {% csrf_token %}
     {% include 'global/partials/menu.html'%}
     {% include 'global/partials/header.html' %}
 

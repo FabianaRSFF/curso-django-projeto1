@@ -1,4 +1,5 @@
 <div class="recipe recipe-list-item">
+    {% csrf_token %} 
     {% if recipe.cover %}
         <div class="recipe-cover">
             <a href="{{recipe.get_absolute_url}}">

@@ -20,6 +20,7 @@ def recipe_api_list(request):
         )
         return Response(serializer.data)
     elif request.method == 'POST':
+        serializer = RecipeSerializer(data=request.data)
         return Response('POST', status=status.HTTP_201_CREATED)
 
 
