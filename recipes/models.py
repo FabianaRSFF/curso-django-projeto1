@@ -1,5 +1,8 @@
 import os
+import string
 from collections import defaultdict
+from random import SystemRandom
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
@@ -9,8 +12,8 @@ from django.forms import ValidationError
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-
 from PIL import Image
+
 from tag.models import Tag
 
 
@@ -62,7 +65,7 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipes:recipe', args=(self.id, ))
-    
+
     @staticmethod
     def resize_image(image, new_width=800):
         image_full_path = os.path.join(settings.MEDIA_ROOT, image.name)
@@ -78,11 +81,16 @@ class Recipe(models.Model):
             optimize=True,
             quality=50,
         )
-        
+
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug = f'{slugify(self.title)}'
-            self.slug = slug
+            rand_letters = ''.join(
+                SystemRandom().choices(
+                    string.ascii_letters + string.digits,
+                    k=5,
+                )
+            )
+            self.slug = slugify(f'{self.title}-{rand_letters}')
 
         saved = super().save(*args, **kwargs)
 
@@ -91,7 +99,7 @@ class Recipe(models.Model):
                 self.resize_image(self.cover, 840)
             except FileNotFoundError:
                 ...
-            
+
         return saved
 
     def clean(self, *args, **kwargs):
@@ -106,12 +114,7 @@ class Recipe(models.Model):
                 )
         if error_messages:
             raise ValidationError(error_messages)
-          
+
     class Meta:
         verbose_name = _('Recipe')
         verbose_name_plural = _('Recipes')
-    
-   
-
-        
-                
