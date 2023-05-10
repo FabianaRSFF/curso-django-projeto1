@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from django.contrib.messages import constants
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework_simplejwt",
     "recipes",
     "authors",
     "tag",
@@ -138,7 +140,7 @@ LANGUAGE_CODE = "pt-BR"
 
 TIME_ZONE = "America/Sao_Paulo"
 
-USE_I18N = False
+USE_I18N = True
 
 USE_TZ = True
 
@@ -178,4 +180,13 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+}
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "BLACKLIST_AFTER_ROTATION": False,
+    "SIGNING_KEY": os.environ.get("SECRET_KEY_JWT", "INSECURE"),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
